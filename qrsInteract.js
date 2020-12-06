@@ -54,7 +54,11 @@ var qrsInteract = function QRSInteractMain(hostname, portNumber, virtualProxyPre
 
     this.UseCookie = function(userCookie) {
         console.log('usercookie (new)', userCookie); //SHOPE
-        requestDefaultParams.headers['Cookie'] = userCookie;
+        //requestDefaultParams.headers['Cookie'] = userCookie;
+        requestDefaultParams = extend(true, requestDefaultParams, {
+            'Cookie': userCookie
+        });
+
         delete requestDefaultParams.headers['X-Qlik-User'];
     };
 
