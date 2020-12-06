@@ -54,9 +54,8 @@ var qrsInteract = function QRSInteractMain(hostname, portNumber, virtualProxyPre
     var basePath = generateBasePath(virtualProxyPrefix);
 
     this.UseCookie = function(userCookie) {
-        console.log('usercookie (new)', userCookie); //SHOPE
-        //requestDefaultParams.headers['Cookie'] = userCookie;
-        requestDefaultParams = extend(true, requestDefaultParams.headers, {
+        console.log('usercookie (new 4)', userCookie); //SHOPE
+        requestDefaultParams = extend(true, requestDefaultParams['headers'], {
             'Cookie': userCookie
         });
 
