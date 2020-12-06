@@ -53,6 +53,7 @@ var qrsInteract = function QRSInteractMain(hostname, portNumber, virtualProxyPre
     var basePath = generateBasePath(virtualProxyPrefix);
 
     this.UseCookie = function(userCookie) {
+        console.log('usercookie', userCookie); //SHOPE
         requestDefaultParams.headers.Cookie = userCookie;
         delete requestDefaultParams.headers['X-Qlik-User'];
     };
@@ -79,6 +80,7 @@ var qrsInteract = function QRSInteractMain(hostname, portNumber, virtualProxyPre
             }
             r['method'] = 'GET';
             r['path'] = path;
+            console.log('requestDefaultParams', r); //SHOPE
             var req = https.request(r, (res) => {
                 var responseString = "";
                 var bufferResponse;
