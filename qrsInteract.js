@@ -1,6 +1,7 @@
 var common = require('./common');
 var https = require('https');
 var Promise = require('bluebird');
+var extend = require('extend');
 
 var qrsInteract = function QRSInteractMain(hostname, portNumber, virtualProxyPrefix, xrfkeyParam, requestDefaultParams) {
     common.initStringHelpers();
