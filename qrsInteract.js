@@ -6,7 +6,6 @@ var extend = require('extend');
 var qrsInteract = function QRSInteractMain(hostname, portNumber, virtualProxyPrefix, xrfkeyParam, requestDefaultParams) {
     common.initStringHelpers();
 
-    console.log('QRSInteractMain', requestDefaultParams);
     var generateBasePath = function(virtualProxy) {
         var newVirtualProxy = virtualProxy;
         if (newVirtualProxy == undefined) {
@@ -81,7 +80,6 @@ var qrsInteract = function QRSInteractMain(hostname, portNumber, virtualProxyPre
             }
             r['method'] = 'GET';
             r['path'] = path;
-            console.log('requestDefaultParams', r); //SHOPE
             var req = https.request(r, (res) => {
                 var responseString = "";
                 var bufferResponse;
