@@ -26,6 +26,12 @@ var qrsInteract = function QRSInteract(inputConfig) {
             });
         }
 
+        if (newConfig['noCertificates']) {
+            delete newConfig.localCertPath;
+            delete newConfig.certificates;
+            delete newConfig.repoAccount;
+        }
+
         return newConfig;
     }
 
@@ -66,45 +72,60 @@ var qrsInteract = function QRSInteract(inputConfig) {
     });
 
     var requestDefaultParams;
-    if (localConfig['certificates']['certFile'] != null && localConfig['certificates']['keyFile'] != null) {
-        requestDefaultParams = {
-            method: '',
-            path: '',
-            rejectUnauthorized: false,
-            host: localConfig.hostname,
-            port: localConfig.portNumber,
-            cert: fs.readFileSync(localConfig.certificates.certFile),
-            key: fs.readFileSync(localConfig.certificates.keyFile),
-            headers: defaultHeaders,
-            gzip: true,
-            json: true
-        };
-    } else if (localConfig['certificates']['pfxFile'] != null && localConfig['certificates']['passphrase'] != null) {
-        requestDefaultParams = {
-            method: '',
-            path: '',
-            rejectUnauthorized: false,
-            host: localConfig.hostname,
-            port: localConfig.portNumber,
-            pfx: fs.readFileSync(localConfig.certificates.pfxFile),
-            headers: defaultHeaders,
-            gzip: true,
-            json: true,
-            passphrase: localConfig.certificates.passphrase
-        };
-    } else if (defaultHeaders['Authorization'] && defaultHeaders['Authorization'].match(/^Bearer .*$/)) {
-        requestDefaultParams = {
-            method: '',
-            path: '',
-            rejectUnauthorized: false,
-            host: localConfig.hostname,
-            port: localConfig.portNumber,
-            headers: defaultHeaders,
-            gzip: true,
-            json: true
-        };
-    } else {
-        throw "Please use 'certFile' and 'keyFile' OR 'pfxFile' and 'passphrase' in your config for setting up your certificates.";
+
+    if (localConfig['noCertificates']) {
+            requestDefaultParams = {
+                method: '',
+                path: '',
+                rejectUnauthorized: false,
+                host: localConfig.hostname,
+                port: localConfig.portNumber,
+                headers: defaultHeaders,
+                gzip: true,
+                json: true
+            };
+        }
+    else {
+        if (localConfig['certificates']['certFile'] != null && localConfig['certificates']['keyFile'] != null) {
+            requestDefaultParams = {
+                method: '',
+                path: '',
+                rejectUnauthorized: false,
+                host: localConfig.hostname,
+                port: localConfig.portNumber,
+                cert: fs.readFileSync(localConfig.certificates.certFile),
+                key: fs.readFileSync(localConfig.certificates.keyFile),
+                headers: defaultHeaders,
+                gzip: true,
+                json: true
+            };
+        } else if (localConfig['certificates']['pfxFile'] != null && localConfig['certificates']['passphrase'] != null) {
+            requestDefaultParams = {
+                method: '',
+                path: '',
+                rejectUnauthorized: false,
+                host: localConfig.hostname,
+                port: localConfig.portNumber,
+                pfx: fs.readFileSync(localConfig.certificates.pfxFile),
+                headers: defaultHeaders,
+                gzip: true,
+                json: true,
+                passphrase: localConfig.certificates.passphrase
+            };
+        } else if (defaultHeaders['Authorization'] && defaultHeaders['Authorization'].match(/^Bearer .*$/)) {
+            requestDefaultParams = {
+                method: '',
+                path: '',
+                rejectUnauthorized: false,
+                host: localConfig.hostname,
+                port: localConfig.portNumber,
+                headers: defaultHeaders,
+                gzip: true,
+                json: true
+            };
+        } else {
+            throw "Please use 'certFile' and 'keyFile' OR 'pfxFile' and 'passphrase' in your config for setting up your certificates.";
+        }
     }
 
     if (localConfig['minTlsVersion'] != null) requestDefaultParams.minVersion = localConfig.minTlsVersion;
