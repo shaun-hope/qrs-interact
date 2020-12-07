@@ -5,7 +5,6 @@ var fs = require('fs');
 var path = require('path');
 var qrsInteractMain = require('./qrsInteract');
 
-
 var qrsInteract = function QRSInteract(inputConfig) {
     common.initStringHelpers();
 
@@ -74,17 +73,17 @@ var qrsInteract = function QRSInteract(inputConfig) {
     var requestDefaultParams;
 
     if (localConfig['noCertificates']) {
-            requestDefaultParams = {
-                method: '',
-                path: '',
-                rejectUnauthorized: false,
-                host: localConfig.hostname,
-                port: localConfig.portNumber,
-                headers: defaultHeaders,
-                gzip: true,
-                json: true
-            };
-        }
+        requestDefaultParams = {
+            method: '',
+            path: '',
+            rejectUnauthorized: false,
+            host: localConfig.hostname,
+            port: localConfig.portNumber,
+            headers: defaultHeaders,
+            gzip: true,
+            json: true
+        };
+    }
     else {
         if (localConfig['certificates']['certFile'] != null && localConfig['certificates']['keyFile'] != null) {
             requestDefaultParams = {

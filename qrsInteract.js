@@ -6,6 +6,7 @@ var extend = require('extend');
 var qrsInteract = function QRSInteractMain(hostname, portNumber, virtualProxyPrefix, xrfkeyParam, requestDefaultParams) {
     common.initStringHelpers();
 
+    console.log('QRSInteractMain', requestDefaultParams);
     var generateBasePath = function(virtualProxy) {
         var newVirtualProxy = virtualProxy;
         if (newVirtualProxy == undefined) {
@@ -54,11 +55,7 @@ var qrsInteract = function QRSInteractMain(hostname, portNumber, virtualProxyPre
     var basePath = generateBasePath(virtualProxyPrefix);
 
     this.UseCookie = function(userCookie) {
-        console.log('usercookie (new 4)', userCookie); //SHOPE
-        requestDefaultParams = extend(true, requestDefaultParams['headers'], {
-            'Cookie': userCookie
-        });
-
+        requestDefaultParams.headers.Cookie = userCookie;
         delete requestDefaultParams.headers['X-Qlik-User'];
     };
 
